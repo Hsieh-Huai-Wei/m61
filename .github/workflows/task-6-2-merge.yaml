@@ -1,0 +1,27 @@
+name: M6-2 Terraform Apply Workflow
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Send notification to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          IMAGE_TAG: ${{ github.ref_name }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"Workflow URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id}}\"}" $DISCORD_WEBHOOK_URL Send Notification to Discord
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: tasks/task-6-2/src 
