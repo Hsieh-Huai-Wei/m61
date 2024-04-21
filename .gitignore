@@ -1,11 +1,6 @@
 .DS_Store
 .*
-!/**/.gitignore
 
 node_modules
 
 !/.github/
-
-tasks/task-6-2/webapp/node_modules
-tasks/task-6-2/webapp/.*
-tasks/task-6-2/webapp/.DS_Store
