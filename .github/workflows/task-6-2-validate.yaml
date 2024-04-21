@@ -3,10 +3,12 @@ name: M6-2 Terraform Validate
 on:
   push:
     branches:
-      - task-6-1*
+      - dev
+      # - task-6-1*
   pull_request:
     branches:
-      - task-6-1*
+      - dev
+      # - task-6-1*
 
 jobs:
   validate:
