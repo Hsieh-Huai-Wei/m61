@@ -22,20 +22,11 @@ jobs:
         run: terraform validate
       
       - name: Terraform Plan
-        id: plan
-        run: terraform plan -out=tfplan
-      
-      - name: Upload Terraform Plan
-        uses: actions/upload-artifact@v2
-        with:
-          name: terraform-plan
-          path: tfplan
+        run: terraform plan -no-color 2>&1 | tee ${{ github.workspace }}/plan_output.txt
 
-      - name: Comment PR with Plan Result
-        uses: machine-learning-apps/pr-comment@master
+      - name: Comment Terraform Plan on PR
+        uses: blinqas/tf-plan-pr-comment@v1
+        with:
+          output_file: ${{ github.workspace }}/plan_output.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          message: "Terraform Plan Output:"
-          path: tfplan
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
