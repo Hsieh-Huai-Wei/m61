@@ -1,0 +1,25 @@
+name: M6-2 Terraform Validate
+
+on:
+  push:
+    branches:
+      - task-6-1*
+  pull_request:
+    branches:
+      - task-6-1*
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      
+      - name: Terraform Init
+        run: terraform init
+      
+      - name: Terraform Validate
+        run: terraform validate

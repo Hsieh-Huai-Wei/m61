@@ -1,0 +1,41 @@
+name: M6-2 Terraform PR Workflow
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-and-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      
+      - name: Terraform Init
+        run: terraform init
+      
+      - name: Terraform Validate
+        run: terraform validate
+      
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -out=tfplan
+      
+      - name: Upload Terraform Plan
+        uses: actions/upload-artifact@v2
+        with:
+          name: terraform-plan
+          path: tfplan
+
+      - name: Comment PR with Plan Result
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: "Terraform Plan Output:"
+          path: tfplan
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
