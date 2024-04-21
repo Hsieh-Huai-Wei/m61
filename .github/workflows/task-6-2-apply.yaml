@@ -22,6 +22,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: tasks/task-6-2/src
+        
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: tasks/task-6-2/src 
