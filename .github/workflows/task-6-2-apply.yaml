@@ -25,9 +25,10 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
-      - name: Send Notification to Discord
-        uses: DiscordWebhook-Action@v1
-        with:
-          url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          content: 'Deployment approved and applied! Workflow URL: ${{ github.event.workflow_run.html_url }}'
+      - name: Send notification to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          IMAGE_TAG: ${{ github.ref_name }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"Workflow URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id}}\"}" $DISCORD_WEBHOOK_URL Send Notification to Discord
 
