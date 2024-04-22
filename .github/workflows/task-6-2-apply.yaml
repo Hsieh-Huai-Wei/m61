@@ -36,6 +36,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
+          approvers: Hsieh-Huai-Wei
           minimum-approvals: 1
           exclude-workflow-initiator-as-approver: false
 
