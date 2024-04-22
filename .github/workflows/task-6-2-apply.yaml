@@ -29,7 +29,7 @@ jobs:
   manual-approval:
     name: Manual approval the deployment
     if: github.event.pull_request.merged == true
-    needs: discord-notification
+    # needs: discord-notification
     runs-on: ubuntu-latest
     steps:
       - name: Wait for Approval
