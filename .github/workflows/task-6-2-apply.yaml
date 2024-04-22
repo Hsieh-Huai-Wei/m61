@@ -6,23 +6,23 @@ on:
       - main
     types: [closed]
     
-  workflow_dispatch:
-    branches:
-      - main
-    inputs:
-      tag:
-        description: 'Tag to deploy'
-        required: true
-        type: choice
-        options:
-          - 'v0.0.1'
+  # workflow_dispatch:
+  #   branches:
+  #     - main
+  #   inputs:
+  #     tag:
+  #       description: 'Tag to deploy'
+  #       required: true
+  #       type: choice
+  #       options:
+  #         - 'v0.0.1'
 
 permissions:
   id-token: write
   contents: read
   issues: write
   pull-requests: write
-  
+
 # jobs:
   # discord-notification:
   #     - name: Send notification to Discord
